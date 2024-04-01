@@ -148,4 +148,17 @@ router.put("/:id/unfollow", async (req, res) => {
   }
 });
 
+// SEARCH USER
+router.get("/search", async (req, res) => {
+  const query = req.query.query;
+  try {
+    const users = await User.find({
+      username: { $regex: query, $options: "i" },
+    });
+    res.status(200).json(users);
+  } catch (err) {
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
 module.exports = router;

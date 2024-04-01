@@ -6,7 +6,7 @@
   align-items: center;
   position: sticky;
   top: 0;
-  z-index: 999;
+  z-index: 99999;
 }
 
 .topbarLogo {
@@ -24,6 +24,7 @@
 
 .topbarCenter {
   flex: 5;
+  position: relative;
 }
 
 .searchbar {
@@ -33,16 +34,40 @@
   border-radius: 30px;
   display: flex;
   align-items: center;
+  position: relative;
+  z-index: 9999; /* Tambahkan z-index */
 }
 
-.searchIcon {
-  font-size: 20px !important;
-  margin-left: 10px;
+.css-168pop2-MuiList-root {
+  border-radius: 0px 0px 10px 10px;
+}
+.searchResults {
+  position: absolute; /* Tambahkan properti position: absolute */
+  top: 20px; /* Sesuaikan dengan jarak dari atas */
+  left: 0; /* Atur posisi horizontal jika diperlukan */
+  width: 100%; /* Sesuaikan dengan lebar input pencarian */
+  background-color: #ffffff;
+  border-top: none;
+  border-radius: 30px;
+  /* border-radius: 10px; */
+  /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
+  /* Atur z-index jika diperlukan */
+}
+
+.searchResult {
+  font-size: 15;
+  color: #000000;
 }
 
 .searchInput {
   border: none;
   width: 70%;
+  z-index: -1;
+  font-size: 15px;
+}
+.searchIcon {
+  font-size: 20px !important;
+  margin-left: 10px;
 }
 
 .searchInput:focus {
@@ -94,4 +119,27 @@
   border-radius: 50%;
   object-fit: cover;
   cursor: pointer;
+}
+
+/* Tambahkan CSS ini di file topbar.css */
+
+.searchResult {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.searchResultImg {
+  height: 30px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.searchResultUsername {
+  font-weight: bold;
+}
+
+.searchResult:hover {
+  background-color: #f3f3f3;
 }

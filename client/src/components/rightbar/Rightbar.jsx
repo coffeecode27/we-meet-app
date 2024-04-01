@@ -6,18 +6,24 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 import { Add, Remove } from "@mui/icons-material";
+
 const Rightbar = ({ user }) => {
   const [friends, setFriends] = useState([]);
   const { user: currentUser, dispatch } = useContext(AuthContext);
-  const [followed, setFollowed] = useState(
-    currentUser.followings.includes(user?._id)
-  );
+  const [followed, setFollowed] = useState(false); // Inisialisasi nilai diubah menjadi false
+  console.log(followed);
+
+  useEffect(() => {
+    // Memperbarui nilai followed berdasarkan data dari local storage saat komponen di-mount
+    setFollowed(currentUser.followings.includes(user?._id));
+  }, [currentUser, user]);
 
   useEffect(() => {
     const getFriends = async () => {
       try {
         if (user && user._id) {
-          // Pastikan user._id terdefinisi sebelum melakukan pemanggilan
+          console.log(user._id);
+          console.log(currentUser);
           const friendList = await axios.get(
             `http://localhost:8000/api/users/friends/${user._id}`
           );
@@ -28,7 +34,7 @@ const Rightbar = ({ user }) => {
       }
     };
     getFriends();
-  }, [user && user._id]);
+  }, [user, currentUser]);
 
   const followHandler = async () => {
     try {
@@ -49,8 +55,13 @@ const Rightbar = ({ user }) => {
             }
           );
           dispatch({ type: "FOLLOW", payload: user._id });
+          console.log(currentUser);
         }
+        // Memperbarui nilai followed berdasarkan data dari local storage setelah perubahan status follow/unfollow
         setFollowed(!followed);
+
+        // Simpan data pengguna ke local storage setelah perubahan status follow/unfollow
+        localStorage.setItem("user", JSON.stringify(currentUser));
       }
     } catch (error) {
       console.log(error);
